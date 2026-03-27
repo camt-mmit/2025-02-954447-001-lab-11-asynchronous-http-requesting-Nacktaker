@@ -1,0 +1,72 @@
+<div class="film-container">
+  <div class="info-group">
+    <span class="label">Title</span>
+    <span class="value">{{ data().title }} <i class="material-symbols-outlined small">open_in_new</i></span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Episode ID</span>
+    <span class="value">{{ data().episode_id }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Opening Crawl</span>
+    <pre class="value crawl-text">{{ data().opening_crawl }}</pre>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Director</span>
+    <span class="value">{{ data().director }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Producer</span>
+    <span class="value">{{ data().producer }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Release Date</span>
+    <span class="value">{{ data().release_date | date: 'MMM dd, yyyy' }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Characters</span>
+    <div class="value list-content">
+      @if (charactersResource.isLoading()) { <span>Loading characters...</span> }
+      @else {
+        <ul>
+          @for (person of charactersResource.value(); track person.url) {
+            <li>
+              <a [routerLink]="['/star-wars/people', person.url | extractId]">
+                {{ person.name }} <i class="material-symbols-outlined x-small">link</i>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Planets</span>
+    <div class="value list-content">
+      @if (planetsResource.isLoading()) { <span>Loading planets...</span> }
+      @else {
+        <ul>
+          @for (planet of planetsResource.value(); track planet.url) {
+            <li>
+              <a [routerLink]="['/star-wars/planets', planet.url | extractId]">
+                {{ planet.name }} <i class="material-symbols-outlined x-small">link</i>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <div class="info-group footer-info">
+    <div><strong>Created</strong> {{ data().created | date: 'MMM dd, yyyy' }}</div>
+    <div><strong>Edited</strong> {{ data().edited | date: 'MMM dd, yyyy' }}</div>
+  </div>
+</div>
